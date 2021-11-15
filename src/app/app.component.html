@@ -1,0 +1,133 @@
+<style>
+  :host {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  
+  p {
+    margin: 0;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    background-color: #1976d2;
+    color: white;
+    font-weight: 600;
+  }
+
+  .toolbar img {
+    margin: 0 16px;
+  }
+
+  .toolbar #twitter-logo {
+    height: 40px;
+    margin: 0 8px;
+  }
+
+  .toolbar #youtube-logo {
+    height: 40px;
+    margin: 0 16px;
+  }
+
+  .toolbar #twitter-logo:hover,
+  .toolbar #youtube-logo:hover {
+    opacity: 0.8;
+  }
+
+  .content {
+    display: flex;
+    margin: 82px auto 32px;
+    padding: 0 16px;
+    /* max-width: 960px; */
+    flex-direction: column;
+    /* align-items: center */;
+  }
+
+  /* Responsive Styles */
+  @media screen and (max-width: 767px) {
+    .card-container > *:not(.circle-link) ,
+    .terminal {
+      width: 100%;
+    }
+
+    .card:not(.highlight-card) {
+      height: 16px;
+      margin: 8px 0;
+    }
+
+    .card.highlight-card span {
+      margin-left: 72px;
+    }
+
+    svg#rocket-smoke {
+      right: 120px;
+      transform: rotate(-5deg);
+    }
+  }
+
+  @media screen and (max-width: 575px) {
+    svg#rocket-smoke {
+      display: none;
+      visibility: hidden;
+    }
+  }
+   .table__header {
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+            }
+   
+</style>
+
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+  <span>&nbsp;&nbsp;&nbsp;Make Brands Project</span>
+    <div class="spacer"></div>
+</div>
+
+<div class="content" role="main">
+
+<p><b>Instructions:</b></p>
+<p>1. Click the "Browse" button to select a .csv file to upload and display in table form</p>
+<input type="file" #csvReader name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event)" accept=".csv" /> 
+<div>
+  <br />
+  <p>2. Once the file is displayed, begin typing in the field below to search specific models, brands, sleep numbers, or prices. You may sort (ascending or descending) by clicking the "asc" or "desc" buttons, respectively.</p>
+  <input type="text" class="form-control"  placeholder="Enter Keyword for filter result" [(ngModel)]="searchedKeyword">
+</div>
+<table id="myTable" width="100%" class="minimalist Black" *ngIf="records.length > 0">    
+  <thead>    
+    <tr>    
+      <th>Camper Make&nbsp;&nbsp;<button (click)="sortByMakeAsc()">Asc</button>&nbsp;|&nbsp;<button (click)="sortByMakeDesc()">Desc</button></th>    
+      <th>Camper Brand&nbsp;&nbsp;<button (click)="sortByBrandAsc()">Asc</button>&nbsp;|&nbsp;<button (click)="sortByBrandDesc()">Desc</button></th>    
+      <th>Sleep Number&nbsp;&nbsp;<button (click)="sortBySleepNumberAsc()">Asc</button>&nbsp;|&nbsp;<button (click)="sortBySleepNumberDesc()">Desc</button></th>    
+      <th>Price&nbsp;&nbsp;<button (click)="sortByPriceAsc()">Asc</button>&nbsp;|&nbsp;<button (click)="sortByPriceDesc()">Desc</button></th>    
+    </tr>    
+  </thead>    
+  <tbody>    
+    <tr *ngFor="let record of records | filter:searchedKeyword">    
+      <td> <span>{{record.camperMake}}</span> </td>    
+      <td> <span>{{record.camperBrand}}</span> </td>    
+      <td> <span>{{record.sleepNumber}}</span> </td>    
+      <td> <span>{{record.price}}</span> </td>    
+    </tr>    
+  </tbody>    
+</table> 
+
+</div>
+<router-outlet></router-outlet>
